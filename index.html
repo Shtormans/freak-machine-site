@@ -1,8 +1,752 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Placeholder</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FreakMachine</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#07070a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at top left, rgba(109,40,217,0.22), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(236,72,153,0.18), transparent 30%),
+        radial-gradient(circle at center, rgba(59,130,246,0.12), transparent 40%);
+    z-index:-2;
+}
+
+body::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+    z-index:-1;
+}
+
+/* NAVBAR */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 8%;
+    backdrop-filter:blur(14px);
+    background:rgba(10,10,15,0.45);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.nav-links{
+    display:flex;
+    gap:32px;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    opacity:0.8;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    opacity:1;
+    color:#a78bfa;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 8%;
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero-tag{
+    display:inline-block;
+    padding:10px 18px;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:999px;
+    background:rgba(255,255,255,0.04);
+    margin-bottom:28px;
+    font-size:14px;
+    color:#d1d5db;
+    backdrop-filter:blur(10px);
+}
+
+.hero h1{
+    font-size:92px;
+    line-height:0.95;
+    margin-bottom:28px;
+    font-weight:800;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#8b5cf6,#ec4899,#3b82f6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    font-size:20px;
+    color:#cbd5e1;
+    line-height:1.7;
+    margin-bottom:42px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 28px;
+    border-radius:16px;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:0.35s;
+    text-decoration:none;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 20px 50px rgba(139,92,246,0.35);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,0.06);
+    color:white;
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,0.1);
+}
+
+/* SECTION */
+
+section{
+    padding:120px 8%;
+}
+
+.section-title{
+    font-size:56px;
+    margin-bottom:18px;
+    font-weight:800;
+}
+
+.section-subtitle{
+    color:#94a3b8;
+    font-size:18px;
+    line-height:1.7;
+    max-width:700px;
+    margin-bottom:70px;
+}
+
+/* PORTFOLIO */
+
+.portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:28px;
+}
+
+.project-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:28px;
+    overflow:hidden;
+    transition:0.35s;
+    backdrop-filter:blur(18px);
+}
+
+.project-card:hover{
+    transform:translateY(-10px);
+    border-color:rgba(139,92,246,0.5);
+    box-shadow:0 25px 60px rgba(0,0,0,0.45);
+}
+
+.project-image{
+    width:100%;
+    height:240px;
+    background:
+        linear-gradient(135deg,#111827,#1e1b4b);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#64748b;
+    font-size:20px;
+    position:relative;
+}
+
+.project-image::after{
+    content:'+ Add Image';
+    position:absolute;
+    color:white;
+    opacity:0.4;
+    font-weight:600;
+}
+
+.project-content{
+    padding:28px;
+}
+
+.project-content h3{
+    font-size:28px;
+    margin-bottom:16px;
+}
+
+.project-content p{
+    color:#cbd5e1;
+    line-height:1.7;
+    margin-bottom:24px;
+}
+
+.tags{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.tag{
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(139,92,246,0.15);
+    border:1px solid rgba(139,92,246,0.3);
+    color:#c4b5fd;
+    font-size:14px;
+}
+
+/* TEAM */
+
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:28px;
+}
+
+.member-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:28px;
+    padding:28px;
+    text-align:center;
+    transition:0.35s;
+    backdrop-filter:blur(14px);
+}
+
+.member-card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(236,72,153,0.45);
+}
+
+.member-image{
+    width:120px;
+    height:120px;
+    margin:0 auto 24px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#111827,#312e81);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    opacity:0.5;
+    font-weight:600;
+}
+
+.member-card h3{
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.role{
+    color:#a78bfa;
+    margin-bottom:18px;
+    font-weight:600;
+}
+
+.member-card p{
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+/* CTA */
+
+.cta{
+    text-align:center;
+    padding-bottom:160px;
+}
+
+.cta-box{
+    background:linear-gradient(135deg,
+    rgba(139,92,246,0.18),
+    rgba(236,72,153,0.14));
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:36px;
+    padding:80px 50px;
+    backdrop-filter:blur(20px);
+}
+
+.cta h2{
+    font-size:54px;
+    margin-bottom:22px;
+}
+
+.cta p{
+    color:#d1d5db;
+    line-height:1.8;
+    max-width:700px;
+    margin:0 auto 40px;
+}
+
+/* FOOTER */
+
+footer{
+    padding:40px 8%;
+    border-top:1px solid rgba(255,255,255,0.06);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+footer p{
+    color:#94a3b8;
+}
+
+.socials{
+    display:flex;
+    gap:18px;
+}
+
+.socials a{
+    color:#94a3b8;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.socials a:hover{
+    color:white;
+}
+
+/* ANIMATION */
+
+.fade-up{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all 1s ease;
+}
+
+.fade-up.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .hero h1{
+        font-size:62px;
+    }
+
+    .section-title{
+        font-size:42px;
+    }
+
+    nav{
+        padding:20px 6%;
+    }
+
+    section{
+        padding:100px 6%;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:48px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .nav-links{
+        gap:18px;
+        font-size:14px;
+    }
+
+    .section-title{
+        font-size:34px;
+    }
+
+    .cta h2{
+        font-size:38px;
+    }
+}
+
+</style>
 </head>
+
 <body>
+
+<nav>
+    <div class="logo">Freak<span>Machine</span></div>
+
+    <div class="nav-links">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<section class="hero">
+
+    <div class="hero-content fade-up">
+
+        <div class="hero-tag">
+            Indie Game Studio • UI/UX • Gameplay • Worldbuilding
+        </div>
+
+        <h1>
+            We Create<br>
+            <span class="gradient">Digital Worlds</span>
+        </h1>
+
+        <p>
+            FreakMachine is a creative game studio focused on atmospheric experiences,
+            memorable gameplay and immersive visual storytelling.
+            We blend design, gameplay systems and technology into games players remember.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#portfolio" class="btn btn-primary">
+                Explore Portfolio
+            </a>
+
+            <a href="#team" class="btn btn-secondary">
+                Meet The Team
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="portfolio">
+
+    <h2 class="section-title fade-up">
+        Featured Projects
+    </h2>
+
+    <p class="section-subtitle fade-up">
+        A collection of experimental game concepts, gameplay systems,
+        atmospheric horror and stylized interactive experiences.
+    </p>
+
+    <div class="portfolio-grid">
+
+        <div class="project-card fade-up">
+
+            <div class="project-image"></div>
+
+            <div class="project-content">
+
+                <h3>Forged Fear</h3>
+
+                <p>
+                    A dark atmospheric horror experience where players forge items
+                    to survive against a relentless monster.
+                    The game combines survival mechanics, crafting and immersive tension
+                    inside a stylized industrial world.
+                </p>
+
+                <div class="tags">
+                    <div class="tag">Horror</div>
+                    <div class="tag">Survival</div>
+                    <div class="tag">Indie</div>
+                    <div class="tag">Atmospheric</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="project-card fade-up">
+
+            <div class="project-image"></div>
+
+            <div class="project-content">
+
+                <h3>The Path</h3>
+
+                <p>
+                    A mysterious low-poly adventure inspired by roguelike exploration
+                    and minimalistic storytelling.
+                    Built around mood, discovery and strategic movement.
+                </p>
+
+                <div class="tags">
+                    <div class="tag">Adventure</div>
+                    <div class="tag">Roguelike</div>
+                    <div class="tag">3D</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="project-card fade-up">
+
+            <div class="project-image"></div>
+
+            <div class="project-content">
+
+                <h3>Steal It!</h3>
+
+                <p>
+                    A strategic prototype focused on resource collection,
+                    unit management and minimalist real-time gameplay.
+                </p>
+
+                <div class="tags">
+                    <div class="tag">Strategy</div>
+                    <div class="tag">RTS</div>
+                    <div class="tag">Prototype</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="team">
+
+    <h2 class="section-title fade-up">
+        Our Team
+    </h2>
+
+    <p class="section-subtitle fade-up">
+        A small but passionate team combining design, gameplay thinking
+        and engineering to create memorable game experiences.
+    </p>
+
+    <div class="team-grid">
+
+        <div class="member-card fade-up">
+
+            <div class="member-image">
+                Photo
+            </div>
+
+            <h3>Екатерина</h3>
+
+            <div class="role">
+                UI / UX Designer
+            </div>
+
+            <p>
+                Creates immersive interfaces, visual identity and intuitive user flows
+                that connect players with the game world.
+            </p>
+
+        </div>
+
+        <div class="member-card fade-up">
+
+            <div class="member-image">
+                Photo
+            </div>
+
+            <h3>Денис</h3>
+
+            <div class="role">
+                Game Designer
+            </div>
+
+            <p>
+                Designs gameplay systems, mechanics and player experiences
+                with a focus on atmosphere and engagement.
+            </p>
+
+        </div>
+
+        <div class="member-card fade-up">
+
+            <div class="member-image">
+                Photo
+            </div>
+
+            <h3>Александр</h3>
+
+            <div class="role">
+                Unity Developer
+            </div>
+
+            <p>
+                Builds scalable gameplay architecture, systems and tools
+                using Unity and modern engineering practices.
+            </p>
+
+        </div>
+
+        <div class="member-card fade-up">
+
+            <div class="member-image">
+                Photo
+            </div>
+
+            <h3>Андрей</h3>
+
+            <div class="role">
+                Unity Developer
+            </div>
+
+            <p>
+                Focused on gameplay implementation, optimization
+                and creating polished interactive experiences.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cta" id="contact">
+
+    <div class="cta-box fade-up">
+
+        <h2>
+            Let's Build Something Unreal
+        </h2>
+
+        <p>
+            FreakMachine creates worlds filled with emotion,
+            atmosphere and unforgettable gameplay moments.
+            Every project starts with imagination.
+        </p>
+
+        <a href="#" class="btn btn-primary">
+            Contact Us
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        © 2026 FreakMachine. All rights reserved.
+    </p>
+
+    <div class="socials">
+        <a href="#">ArtStation</a>
+        <a href="#">GitHub</a>
+        <a href="#">Behance</a>
+    </div>
+
+</footer>
+
+<script>
+
+const observer = new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+
+    });
+
+},{
+    threshold:0.15
+});
+
+document.querySelectorAll('.fade-up').forEach(el=>{
+    observer.observe(el);
+});
+
+/* PARALLAX */
+
+window.addEventListener('mousemove',(e)=>{
+
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+
+    document.body.style.backgroundPosition =
+        `${x * 20}px ${y * 20}px`;
+
+});
+
+</script>
+
 </body>
 </html>
